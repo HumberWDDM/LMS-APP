@@ -1,0 +1,67 @@
+<div class="max-w-2xl mx-auto">
+  <div class="card bg-base-100 shadow-lg">
+    <div class="card-body">
+      <h2 class="card-title text-2xl mb-6">User Profile</h2>
+      
+      <form method="POST" action="/users/profile/update">
+        <div class="space-y-4">
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">Full Name</span>
+            </label>
+            <input 
+              type="text" 
+              name="name"
+              value="<%= profileUser.name %>"
+              class="input input-bordered"
+              required
+            >
+          </div>
+
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">Email Address</span>
+            </label>
+            <input 
+              type="email" 
+              name="email"
+              value="<%= profileUser.email %>"
+              class="input input-bordered"
+              required
+            >
+          </div>
+
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">Account Type</span>
+            </label>
+            <input 
+              type="text" 
+              value="<%= profileUser.role.toUpperCase() %>"
+              class="input input-bordered"
+              disabled
+            >
+          </div>
+
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">Member Since</span>
+            </label>
+            <input 
+              type="text" 
+              value="<%= formatDate(profileUser.created_at) %>"
+              class="input input-bordered"
+              disabled
+            >
+          </div>
+
+          <div class="form-control mt-6">
+            <button type="submit" class="btn btn-primary">Update Profile</button>
+            <a href="/dashboard" class="btn btn-ghost mt-2">Cancel</a>
+            <a href="/users/profile/change-password" class="btn btn-link mt-2">Change Password</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div> 
+</div>
