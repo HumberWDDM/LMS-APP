@@ -1,0 +1,91 @@
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-2xl mx-auto">
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+          <h1 class="card-title text-2xl mb-6">Edit Course</h1>
+  
+          <form action="/courses/<%= course.id %>/update" method="POST" class="space-y-4" enctype="multipart/form-data">
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text">Course Title</span>
+              </label>
+              <input 
+                type="text" 
+                name="title" 
+                class="input input-bordered" 
+                value="<%= course.title %>" 
+                required
+              >
+            </div>
+  
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text">Description</span>
+              </label>
+              <textarea 
+                name="description" 
+                class="textarea textarea-bordered h-32"
+              ><%= course.description %></textarea>
+            </div>
+  
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text">Instructor</span>
+              </label>
+              <input 
+                type="text" 
+                name="instructor" 
+                class="input input-bordered"
+                readonly
+                value="<%= user.name %>"
+              >
+            </div>
+  
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text">Thumbnail Image</span>
+              </label>
+              <div class="flex flex-col space-y-2">
+                <% if (course.thumbnail) { %>
+                  <div class="current-thumbnail mb-2">
+                    <p class="text-sm mb-1">Current thumbnail:</p>
+                    <img src="<%= course.thumbnail %>" alt="Current thumbnail" class="max-h-48 rounded">
+                  </div>
+                <% } %>
+                
+                <input 
+                  type="file" 
+                  name="thumbnail" 
+                  id="thumbnail"
+                  accept="image/*"
+                  class="file-input file-input-bordered w-full"
+                >
+                <div id="image-preview" class="mt-2" style="display: none;">
+                  <p class="text-sm mb-1">New thumbnail preview:</p>
+                  <img id="preview-img" src="" alt="Thumbnail preview" class="max-h-48 rounded">
+                </div>
+                <small class="text-gray-500">Upload a new image to replace the current one (JPG, PNG, GIF)</small>
+              </div>
+            </div>
+  
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text">Status</span>
+              </label>
+              <select name="status" class="select select-bordered w-full">
+                <option value="active" <%= course.status === 'active' ? 'selected' : '' %>>Active</option>
+                <option value="draft" <%= course.status === 'draft' ? 'selected' : '' %>>Draft</option>
+                <option value="archived" <%= course.status === 'archived' ? 'selected' : '' %>>Archived</option>
+              </select>
+            </div>
+  
+            <div class="form-control mt-6">
+              <button type="submit" class="btn btn-primary">Update Course</button>
+              <a href="/courses/list" class="btn btn-ghost mt-2">Cancel</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
