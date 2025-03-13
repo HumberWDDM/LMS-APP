@@ -1,0 +1,80 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="bg-base-100 rounded-xl shadow-xl p-6">
+    <div class="flex justify-between items-start mb-6">
+      <div>
+        <h1 class="text-4xl font-bold mb-2"><%= course.title %></h1>
+        <div class="badge badge-primary"><%= course.instructor_name %></div>
+      </div>
+
+      <div class="flex gap-2">
+        <% if (user.role === 'instructor' || user.role === 'admin') { %>
+          <a href="/courses/<%= course.id %>/edit" class="btn btn-outline">
+            Edit
+          </a>
+          <a href="/courses/<%= course.id %>/modules/create" class="btn btn-primary">
+            + Add Module
+          </a>
+          <form action="/courses/<%= course.id %>/delete" method="POST">
+            <button type="submit" class="btn btn-error btn-outline">
+              Delete
+            </button>
+          </form>
+        <% } else if (user.role === 'student') { %>
+          <% if (course.isEnrolled) { %>
+            <form action="" method="GET"> <!-- will update to post-->
+              <button type="submit" class="btn btn-warning">
+                Unenroll
+              </button>
+            </form>
+          <% } else { %>
+            <form action="" method="GET"> <!-- will update to post-->
+              <button type="submit" class="btn btn-success">
+                Enroll Now
+              </button>
+            </form>
+          <% } %>
+        <% } %>
+      </div>
+    </div>
+
+    <% if (course.thumbnail) { %>
+      <img src="<%= course.thumbnail %>" alt="Course thumbnail" class="w-full h-64 object-cover rounded-lg mb-6">
+    <% } %>
+
+    <div class="prose max-w-none mb-8">
+      <%= course.description %>
+    </div>
+
+    <div class="divider"></div>
+
+    <h2 class="text-2xl font-bold mb-4">Course Modules</h2>
+    <div class="space-y-4">
+      <% modules.forEach(module => { %>
+        <div class="collapse collapse-plus bg-base-200">
+          <input type="checkbox"> 
+          <div class="collapse-title text-xl font-medium">
+            <%= module.title %>
+          </div>
+          <div class="collapse-content"> 
+            <p class="text-base-content/70 mb-4"><%= module.description %></p>
+            
+            <% if (module.contents.length > 0) { %>
+              <div class="space-y-2">
+                <% module.contents.forEach(content => { %>
+                  <div class="flex items-center gap-2 p-2 bg-base-100 rounded">
+                    <span class="badge badge-sm"><%= content.type %></span>
+                    <span><%= content.title %></span>
+                  </div>
+                <% }) %>
+              </div>
+            <% } else { %>
+              <div class="alert alert-info">
+                No contents in this module
+              </div>
+            <% } %>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</div>
