@@ -1,0 +1,110 @@
+<div class="min-h-screen flex items-center justify-center p-4">
+  <div class="card bg-base-100 shadow-2xl border border-base-200">
+    <div class="card-body p-8">
+      <div class="text-center mb-2">
+        <h2 class="text-3xl font-bold mb-4">Create New Account</h2>
+        <p class="text-base-content/70 mb-6">Join our learning community</p>
+      </div>
+
+      <form action="/auth/register" method="POST" class="space-y-5">
+        <!-- Name Input -->
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text font-medium text-base-content/80">Full Name</span>
+          </label>
+          <input
+            type="text"
+            name="name"
+            placeholder="John Doe"
+            class="input input-bordered input-primary focus:ring-2 focus:ring-primary/50 h-12"
+            required
+          />
+        </div>
+
+        <!-- Email Input -->
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text font-medium text-base-content/80">Email</span>
+          </label>
+          <input
+            type="email"
+            name="email"
+            placeholder="john@example.com"
+            class="input input-bordered input-primary focus:ring-2 focus:ring-primary/50 h-12"
+            required
+          />
+        </div>
+
+        <!-- Password Inputs -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text font-medium text-base-content/80">Password</span>
+            </label>
+            <input
+              type="password"
+              name="password"
+              placeholder="••••••••"
+              class="input input-bordered input-primary focus:ring-2 focus:ring-primary/50 h-12"
+              required
+            />
+          </div>
+
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text font-medium text-base-content/80">Confirm Password</span>
+            </label>
+            <input
+              type="password"
+              name="confirmPassword"
+              placeholder="••••••••"
+              class="input input-bordered input-primary focus:ring-2 focus:ring-primary/50 h-12"
+              required
+            />
+          </div>
+        </div>
+
+        <!-- Role Selection -->
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text font-medium text-base-content/80">Account Type</span>
+          </label>
+          <select 
+            name="role" 
+            class="select select-primary w-full focus:ring-2 focus:ring-primary/50 h-12"
+            required
+          >
+            <option value="student" selected>Student</option>
+            <option value="instructor">Instructor</option>
+          </select>
+          <label class="label">
+            <span class="label-text-alt text-base-content/50 mt-1">Select your primary role</span>
+          </label>
+        </div>
+
+        <!-- Submit Button -->
+        <button 
+          type="submit" 
+          class="btn btn-primary btn-block h-12 text-lg font-medium hover:opacity-90 transition-opacity"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+          </svg>
+          Create Account
+        </button>
+      </form>
+
+      <div class="divider my-8">OR</div>
+
+      <div class="text-center text-sm">
+        <span class="text-base-content/70">Already have an account? </span>
+        <a 
+          href="/auth/login" 
+          class="link link-primary font-medium hover:underline underline-offset-4"
+        >
+          Login here
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
