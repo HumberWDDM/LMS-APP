@@ -1,0 +1,59 @@
+
+
+<div class="container mx-auto px-4 py-8">
+  <div class="max-w-2xl mx-auto">
+    <div class="card bg-base-100 shadow-xl">
+      <div class="card-body">
+        <h1 class="card-title text-2xl mb-6">Create New Course</h1>
+
+        <form action="/courses/create" method="POST" class="space-y-4">
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">Course Title</span>
+            </label>
+            <input 
+              type="text" 
+              name="title" 
+              class="input input-bordered" 
+              required
+            >
+          </div>
+
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">Description</span>
+            </label>
+            <textarea 
+              name="description" 
+              class="textarea textarea-bordered h-32"
+            ></textarea>
+          </div>
+
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">Thumbnail Image</span>
+            </label>
+            <div class="flex flex-col space-y-2">
+              <input 
+                type="file" 
+                name="thumbnail" 
+                id="thumbnail"
+                accept="image/*"
+                class="file-input file-input-bordered w-full"
+              >
+              <div id="image-preview" class="mt-2" style="display: none;">
+                <img id="preview-img" src="" alt="Thumbnail preview" class="max-h-48 rounded">
+              </div>
+              <small class="text-gray-500">Upload an image from your device (JPG, PNG, GIF)</small>
+            </div>
+          </div>
+
+          <div class="form-control mt-6">
+            <button type="submit" class="btn btn-primary">Create Course</button>
+            <a href="/courses/list" class="btn btn-ghost mt-2">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
