@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LMS - <%= title %></title>
+  <link href="/css/output.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@3.9.4/dist/full.css" rel="stylesheet">
+  <script src="/js/thumbnailPreview.js"></script>
+  <script src="/js/yearUpdate.js"></script>
+</head>
+<body class="min-h-screen flex flex-col bg-base-300">
+  <%- include('../partials/navbar') %>
+
+  <main class="flex-grow container mx-auto py-8">
+    <%- include('../partials/messages') %>
+    <%- body %>
+  </main>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>
