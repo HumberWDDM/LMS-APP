@@ -1,0 +1,342 @@
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <!-- Main Dashboard Grid -->
+  <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+    <% if (isAdmin) { %>
+    <!-- Admin Dashboard -->
+    <div class="bg-base-100 rounded-lg shadow-lg col-span-full p-6">
+      <h2 class="text-2xl font-bold mb-6">Admin Dashboard</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="bg-base-200 p-6 rounded-lg text-center">
+          <div
+            class="text-primary text-sm font-medium uppercase tracking-wide mb-1"
+          >
+            Total Courses
+          </div>
+          <div class="text-3xl font-bold"><%= courses.length %></div>
+        </div>
+        <div class="bg-base-200 p-6 rounded-lg text-center">
+          <div
+            class="text-primary text-sm font-medium uppercase tracking-wide mb-1"
+          >
+            Total Students
+          </div>
+          <div class="text-3xl font-bold">
+            <%= allStudents ? allStudents.length : 0 %>
+          </div>
+        </div>
+        <div class="bg-base-200 p-6 rounded-lg text-center">
+          <div
+            class="text-primary text-sm font-medium uppercase tracking-wide mb-1"
+          >
+            Total Instructors
+          </div>
+          <div class="text-3xl font-bold">
+            <%= allInstructors ? allInstructors.length : 0 %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Admin: Recent Courses -->
+    <div class="bg-base-100 rounded-lg shadow-lg p-6">
+      <h3 class="font-bold text-xl mb-4">Recent Courses</h3>
+      <div class="space-y-3">
+        <% courses.forEach(course => { %>
+        <a href="/courses/view/<%= course.id %>" class="block">
+          <div class="bg-base-200 rounded-lg p-4 transition hover:bg-base-300">
+            <div class="flex justify-between items-center">
+              <div>
+                <div class="font-bold"><%= course.title %></div>
+                <div class="text-sm text-base-content/70">
+                  By <%= course.instructor_name %>
+                </div>
+              </div>
+              <div class="badge badge-primary px-3 py-2">
+                <%= course.student_count %> students
+              </div>
+            </div>
+          </div>
+        </a>
+        <% }); %>
+      </div>
+    </div>
+
+    <!-- Admin: All Students -->
+    <div class="bg-base-100 rounded-lg shadow-lg p-6">
+      <h3 class="font-bold text-xl mb-4">All Students</h3>
+      <div class="overflow-y-auto max-h-96">
+        <table class="table w-full">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Courses</th>
+              <th>Joined</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (allStudents && allStudents.length > 0) { %> <%
+            allStudents.forEach(student => { %>
+            <tr class="hover">
+              <td><%= student.name %></td>
+              <td><%= student.email %></td>
+              <td><%= student.enrolled_courses %></td>
+              <td><%= formatDate(student.created_at) %></td>
+            </tr>
+            <% }); %> <% } else { %>
+            <tr>
+              <td colspan="4" class="text-center py-4">No students found</td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Admin: All Instructors -->
+    <div class="bg-base-100 rounded-lg shadow-lg p-6">
+      <h3 class="font-bold text-xl mb-4">All Instructors</h3>
+      <div class="overflow-y-auto max-h-96">
+        <table class="table w-full">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Courses</th>
+              <th>Joined</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (allInstructors && allInstructors.length > 0) { %> <%
+            allInstructors.forEach(instructor => { %>
+            <tr class="hover">
+              <td><%= instructor.name %></td>
+              <td><%= instructor.email %></td>
+              <td><%= instructor.course_count %></td>
+              <td><%= formatDate(instructor.created_at) %></td>
+            </tr>
+            <% }); %> <% } else { %>
+            <tr>
+              <td colspan="4" class="text-center py-4">No instructors found</td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <% } else if (isInstructor) { %>
+    <!-- Instructor Dashboard -->
+    <div class="bg-base-100 rounded-lg shadow-lg col-span-full p-6">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold">Teaching Portal</h2>
+        <div class="flex gap-4">
+          <a href="/courses/create" class="btn btn-primary">
+            + Create Course
+          </a>
+        </div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="text-lg font-bold">Your Courses</h3>
+          </div>
+          <div class="space-y-3">
+            <% courses.forEach(course => { %>
+            <a href="/courses/view/<%= course.id %>" class="block">
+              <div
+                class="bg-base-200 rounded-lg overflow-hidden hover:bg-base-300 transition"
+              >
+                <div class="p-4 font-medium flex items-center justify-between">
+                  <div>
+                    <%= course.title %>
+                    <span
+                      class="badge badge-sm ml-2 bg-primary text-primary-content"
+                    >
+                      <%= course.student_count %> students
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <% }); %>
+          </div>
+        </div>
+        <div>
+          <h3 class="text-lg font-bold mb-4">Recent Submissions</h3>
+        </div>
+      </div>
+    </div>
+
+    <% } else if (isStudent) { %>
+    <!-- Student Dashboard -->
+    <div class="bg-base-100 rounded-lg shadow-lg p-6">
+      <h3 class="font-bold text-xl mb-4">My Courses</h3>
+      <div class="space-y-4">
+        <% if (courses && courses.length > 0) { %> <% courses.forEach(course =>
+        { %>
+        <a href="/courses/view/<%= course.id %>" class="block">
+          <div class="bg-base-200 rounded-lg p-4 hover:bg-base-300 transition">
+            <div class="flex flex-col md:flex-row md:items-center gap-4">
+              <div class="flex-1">
+                <div class="font-bold"><%= course.title %></div>
+                <div class="text-sm text-base-content/70">
+                  By <%= course.instructor_name %>
+                </div>
+              </div>
+              <div class="w-full md:w-32">
+                <div class="flex justify-between text-xs mb-1">
+                  <span>Progress</span>
+                  <span><%= course.progress %>%</span>
+                </div>
+                <div class="w-full bg-base-300 rounded-full h-2">
+                  <div
+                    class="bg-primary h-2 rounded-full"
+                    style="width: <%= course.progress %>%"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+        <% }); %> <% } else { %>
+        <div class="text-center py-8 bg-base-200 rounded-lg">
+          <p class="text-base-content/70">
+            You haven't enrolled in any courses yet.
+          </p>
+          <p class="mt-2">Check out available courses below!</p>
+        </div>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="bg-base-100 rounded-lg shadow-lg p-6">
+      <h3 class="font-bold text-xl mb-4">Upcoming Assignments</h3>
+      <div class="space-y-4">
+        <% if (recentAssignments && recentAssignments.length > 0) { %> <%
+        recentAssignments.forEach(assignment => { %>
+        <div class="bg-base-200 rounded-lg p-4 hover:bg-base-300 transition">
+          <div class="flex justify-between items-start">
+            <div>
+              <div class="font-bold"><%= assignment.title %></div>
+              <div class="text-sm text-base-content/70">
+                <%= assignment.course_title %>
+              </div>
+            </div>
+            <div class="text-right">
+              <div class="text-sm mb-1">
+                <%= formatDate(assignment.due_date) %>
+              </div>
+              <% if (assignment.submitted) { %>
+              <span class="badge badge-success">Submitted</span>
+              <% } else { %>
+              <span class="badge badge-warning">Pending</span>
+              <% } %>
+            </div>
+          </div>
+        </div>
+        <% }); %> <% } else { %>
+        <div class="text-center py-8 bg-base-200 rounded-lg">
+          <p class="text-base-content/70">No upcoming assignments</p>
+        </div>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="bg-base-100 rounded-lg shadow-lg p-6 lg:col-span-2">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="font-bold text-xl">Available Courses</h3>
+        <div class="flex gap-2">
+          <div class="form-control">
+            <input
+              type="text"
+              id="courseSearch"
+              placeholder="Search courses..."
+              class="input input-bordered input-sm"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-2 mt-4" id="availableCoursesList">
+        <% if (availableCourses && availableCourses.length > 0) { %> <%
+        availableCourses.forEach(course => { %>
+        <div
+          class="bg-base-200 rounded-lg overflow-hidden hover:bg-base-300 transition course-card"
+        >
+          <div class="p-4">
+            <div class="flex justify-between items-start mb-2">
+              <h4 class="font-bold course-title"><%= course.title %></h4>
+              <span class="badge badge-primary"
+                ><%= course.student_count %> enrolled</span
+              >
+            </div>
+            <p class="text-sm text-base-content/70 mb-2 course-instructor">
+              Instructor: <%= course.instructor_name %>
+            </p>
+            <p class="text-sm mb-4 line-clamp-2 course-description">
+              <%= course.course_description || 'No description available' %>
+            </p>
+            <div class="flex justify-between items-center mt-2">
+              <a
+                href="/courses/view/<%= course.id %>"
+                class="btn btn-sm btn-outline"
+                >View Details</a
+              >
+              <form action="" method="GET">
+                <!-- will update to post-->
+                <input type="hidden" name="courseId" value="<%= course.id %>" />
+                <button type="submit" class="btn btn-sm btn-primary">
+                  Enroll Now
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <% }); %> <% } else { %>
+        <div class="col-span-2 text-center py-8 bg-base-200 rounded-lg">
+          <p class="text-base-content/70">No available courses found</p>
+        </div>
+        <% } %>
+      </div>
+    </div>
+    <% } %>
+
+    <!-- Common Recent Activity Section -->
+    <div
+      class="bg-base-100 rounded-lg shadow-lg p-6 md:col-span-2 lg:col-span-<%= isAdmin ? '3' : '2' %>"
+    >
+      <h3 class="font-bold text-xl mb-4">Recent Activity</h3>
+      <div class="overflow-x-auto">
+        <table class="table w-full">
+          <tbody>
+            <% recentActivity.forEach(activity => { %>
+            <tr>
+              <td>
+                <div class="flex items-center gap-2">
+                  <% if (activity.type === 'submission') { %>
+                  <div class="badge badge-success">Submission</div>
+                  <% } else if (activity.type === 'enrollment') { %>
+                  <div class="badge badge-info">Enrollment</div>
+                  <% } else if (activity.type === 'course_created') { %>
+                  <div class="badge badge-primary">New Course</div>
+                  <% } else if (activity.type === 'course_updated') { %>
+                  <div class="badge badge-warning">Course Updated</div>
+                  <% } else if (activity.type === 'course_deleted') { %>
+                  <div class="badge badge-error">Course Deleted</div>
+                  <% } %>
+                  <span class="font-medium"><%= activity.title %></span>
+                </div>
+              </td>
+              <td><%= activity.user_name %></td>
+              <td class="text-base-content/70">
+                <%= formatDate(activity.timestamp) %>
+              </td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
